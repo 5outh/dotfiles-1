@@ -1,0 +1,5 @@
+#! /bin/zsh
+
+cd $FRONTROW_PATH/sql/; ./scripts/run-migrations.sh dev13
+
+cd $FRONTROW_PATH/ops/; ./fansible.sh dev13 site.yml --artifact-branch="$(git rev-parse --abbrev-ref HEAD)"
