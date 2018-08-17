@@ -1,0 +1,11 @@
+#! /bin/zsh
+
+if [ $# -eq 0 ]; then
+  stack test --fast $(basename $(pwd)) --file-watch \
+    --test-arguments="--rerun --failure-report=TESTREPORT --rerun-all-on-success" \
+    --ghc-options="-j9"
+else
+  stack test --fast $(basename $(pwd)) --file-watch \
+    --test-arguments="-m \"$1\" --rerun --failure-report=TESTREPORT --rerun-all-on-success" \
+    --ghc-options="-j9"
+fi

@@ -18,11 +18,15 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'kana/vim-arpeggio'
+Plug 'meck/vim-brittany'
+Plug 'mileszs/ack.vim'
 Plug 'miyakogi/seiya.vim'
+Plug 'mlent/ale'
 Plug 'morhetz/gruvbox'
+Plug 'mustache/vim-mustache-handlebars'
 Plug 'mxw/vim-jsx'
+Plug 'nbouscal/vim-stylish-haskell'
 Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim' }
-Plug 'neomake/neomake'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'ntpeters/vim-better-whitespace'
@@ -32,11 +36,15 @@ Plug 'Raimondi/delimitMate'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'shawncplus/phpcomplete.vim'
+Plug 'tikhomirov/vim-glsl'
+Plug 'tomlion/vim-solidity'
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
@@ -51,6 +59,20 @@ set list
 
 let g:ghcid_command = "ghcid --command=\"stack ghci $(basename $(pwd))\""
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_linters = {}
+let g:ale_linters['javascript'] = ['prettier', 'eslint']
+let g:ale_linters['jsx'] = ['prettier', 'eslint']
+let g:ale_linters['haskell'] = ['hlint']
+
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier', 'eslint']
+let g:ale_fixers['json'] = ['prettier']
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_fix_on_save = 1
+
+let g:brittany_on_save = 0
 
 let g:elm_format_autosave = 1
 
@@ -58,9 +80,6 @@ let g:elm_format_autosave = 1
 let g:javascript_plugin_flow = 1
 let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
-
-
-let g:neomake_javascript_enabled_makers = ['eslint']
 
 
 "Colors etc
@@ -88,7 +107,7 @@ endif
 
 set colorcolumn=80,120
 
-" end colors 
+" end colors
 syntax on
 filetype plugin indent on
 
@@ -185,9 +204,6 @@ nnoremap <Leader>e :FZF<cr>
 nnoremap <Leader>st :split<CR><C-w><C-w>:term<CR>
 nnoremap <Leader>vt :vsplit<CR><C-w><C-w>:term<CR>
 
-" Haskell setup
-nnoremap <Leader>hs :vsplit<CR><C-w><C-w>:term<CR>stack ghci<CR><C-\><C-n>:split<CR><C-w><C-w>:term<CR>ghcid<CR><C-\><C-n><C-w><C-w>
-
 " Stylish haskell
 :nnoremap <leader>ss v_ip:!stylish-haskell <CR>
 
@@ -235,30 +251,45 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
-imap <buffer> \forall ∀ 
-imap <buffer> \to → 
-imap <buffer> \lambda λ 
-imap <buffer> \Sigma Σ 
-imap <buffer> \exists ∃ 
-imap <buffer> \equiv ≡
-
 nnoremap <A-t> :terminal<CR>
 
 " Map jk to esc (chord)
 call arpeggio#map('i', '', 0, 'jk', '<Esc>')
 
-" autocmd! BufWritePost * Neomake
-let g:neomake_haskell_enabled_makers = ['hlint']
-let g:neomake_open_list = 1
+" <leader>? gets full info about lint errors
+autocmd FileType haskell nnoremap <buffer> <leader>? :call ale#cursor#ShowCursorDetail()<cr>
 
 " ctags for haskell
 " Add these to your vimrc to automatically keep the tags file up to date.
 " Unfortunately silent means the errors look a little ugly, I suppose I could
 " capture those and print them out with echohl WarningMsg.
 augroup tags
-au BufWritePost *.hs            silent !init-tags %
-au BufWritePost *.hsc           silent !init-tags %
+  au BufWritePost *.hs            silent !init-tags %
+  au BufWritePost *.hsc           silent !init-tags %
 augroup END
+
+augroup ale
+  autocmd!
+  autocmd CursorHold * call ale#Lint()
+  autocmd InsertLeave * call ale#Lint()
+augroup END
+
+ "Temporary thing to replace some junk for Freckle
+
+"
+function! ReplaceLens()
+    execute "normal! ma?@\<C-m>lyw`ahpxvUbvu"
+endfunction
+
+call setreg('l', ":call ReplaceLens()\<CR>")
+
+" Format a comment block to 80 characters
+" NOTE does not work
+function! FormatComments()
+    set tw=80
+    execute "normal! gq"
+    set tw=120
+endfunction
 
 " If you use qualified tags, then you have to change iskeyword to include
 " a dot.  Unfortunately, that affects a lot of other commands, such as

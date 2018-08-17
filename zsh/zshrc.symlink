@@ -1,9 +1,6 @@
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/dotfiles-1
 
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/projects
-
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
 if [[ -a ~/.localrc ]]
@@ -97,9 +94,8 @@ source $ZSH/oh-my-zsh.sh
 # Source git aliases again, because the `git` plugin overwrites aliases
 source $HOME/dotfiles-1/git/aliases.zsh
 
-
 export FRONTROW_PATH="$HOME/projects/frontrow/megarepo/"
-export PATH="/opt/ghc/bin:$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:./dist"
+export PATH="/usr/local/pgsql/bin:./node_modules/.bin:~/.yarn/bin/:~/dotfiles-1/bin:/opt/ghc/bin:$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:./dist"
 precmd() {
   RPROMPT=""
 }

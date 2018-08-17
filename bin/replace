@@ -1,0 +1,5 @@
+#! /bin/zsh
+# Replace $1 with $2 in all files in project
+
+COMMAND="sed -i -e 's/$1/$2/g'"
+find . -type f -exec $COMMAND {} \;

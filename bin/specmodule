@@ -1,0 +1,6 @@
+#! /bin/zsh
+
+MODULE_LINE=$(grep module $1)
+[[ $MODULE_LINE =~ 'module ([A-Za-z\.]*)' ]] && MODULE_NAME=$match[1]
+
+echo ${MODULE_NAME:s/Spec/}
