@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Load resources
+
+xrdb -merge .Xresources
+
+# Fire up apps
+xscreensaver -no-splash &
+
+exec xmonad
