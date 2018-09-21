@@ -3,4 +3,4 @@ CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 git checkout master
 git pull origin master
 git checkout $CURRENT_BRANCH
-git merge master
+git rebase master
