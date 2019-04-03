@@ -2,7 +2,6 @@ alias reload!='. ~/.zshrc'
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias notify="notify-send \"DONE\!\" \"Your thing is done, Ben.\""
-alias work="cd ~/projects/frontrow/megarepo && git refresh && ./build.sh build --dev"
 alias open='xdg-open'
 alias c1="awk '{print \$1}'"
 alias c2="awk '{print \$2}'"
