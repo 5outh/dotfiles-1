@@ -8,9 +8,10 @@ endfunction
 call plug#begin()
 
 Plug '5outh/yesod-routes.vim'
+Plug 'ElmCast/elm-vim'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'ElmCast/elm-vim'
 Plug 'ervandew/supertab'
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'haya14busa/incsearch.vim'
@@ -23,18 +24,18 @@ Plug 'mtth/scratch.vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'mxw/vim-jsx'
 Plug 'neovimhaskell/haskell-vim'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'pangloss/vim-javascript'
 Plug 'pbrisbin/vim-syntax-shakespeare'
 Plug 'scrooloose/nerdcommenter'
+Plug 'skywind3000/vim-preview'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
 
@@ -172,6 +173,10 @@ nnoremap <Leader>e :FZF<cr>
 
 " Window cycle
 map <Leader>w <C-w><C-w>
+
+" Tag preview
+nnoremap <C-j> :PreviewTag<CR>
+nnoremap <C-k> :PreviewClose<CR>
 
 set ruler
 
