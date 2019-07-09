@@ -45,8 +45,6 @@ set mouse=a
 set encoding=utf-8
 set list
 
-let g:ghcid_command = "ghcid --command=\"stack ghci $(basename $(pwd))\""
-
 let g:ale_linters = {}
 let g:ale_linters['javascript'] = ['prettier', 'eslint']
 let g:ale_linters['jsx'] = ['prettier', 'eslint']
@@ -56,6 +54,11 @@ let g:ale_fixers = {}
 let g:ale_fixers['haskell'] = ['stylish-haskell', 'brittany']
 let g:ale_fixers['javascript'] = ['prettier', 'eslint']
 let g:ale_fixers['json'] = ['prettier']
+
+" Use stack to execute haskell linters and fixers
+let g:ale_haskell_hlint_executable='stack'
+let g:ale_haskell_brittany_executable='stack'
+let g:ale_haskell_stylish_haskell_executable='stack'
 
 let g:ale_javascript_prettier_use_local_config = 1
 
